@@ -70,7 +70,7 @@ usrClient.on("message", async (ctx) => {
     ) {
         await botClient.sendMessage(
             ADMIN_CHAT_ID,
-            "MESSAGE",
+            Deno.env.get("BOT_REPORT_MESSAGE") || "MESSAGE",
             {
                 replyMarkup: {
                     inlineKeyboard: [
