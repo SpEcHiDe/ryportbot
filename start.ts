@@ -1,21 +1,30 @@
+// load environment variables
 import { load } from "std/dotenv/mod.ts";
 await load({ export: true });
 
-export const TG_ENV_S = Deno.env.toObject();
+const BOT_SESSION = Deno.env.get("BOT_SESSION") || "bot";
+const USR_SESSION = Deno.env.get("USR_SESSION") || "usr";
+
+const TG_API_ID = parseInt(Deno.env.get("API_ID") || "0");
+const TG_API_HASH = Deno.env.get("API_HASH");
+const TG_BOT_TOKEN = Deno.env.get("BOT_TOKEN");
+
 
 import { Client, StorageLocalStorage } from "mtkruto/mod.ts";
 
+console.log("Starting Bot Client");
 const botClient = new Client(
-    new StorageLocalStorage(TG_ENV_S.BOT_SESSION),
-    parseInt(TG_ENV_S.API_ID),
-    TG_ENV_S.API_HASH,
+    new StorageLocalStorage(BOT_SESSION),
+    TG_API_ID,
+    TG_API_HASH,
 );
-await botClient.start(TG_ENV_S.BOT_TOKEN);
+await botClient.start(TG_BOT_TOKEN);
 
+console.log("Starting User Client");
 const usrClient = new Client(
-    new StorageLocalStorage(TG_ENV_S.USR_SESSION),
-    parseInt(TG_ENV_S.API_ID),
-    TG_ENV_S.API_HASH,
+    new StorageLocalStorage(USR_SESSION),
+    TG_API_ID,
+    TG_API_HASH,
 );
 
 await usrClient.start({
@@ -25,3 +34,9 @@ await usrClient.start({
 });
 
 console.log("Started.");
+
+
+// await usrClient.disconnect();
+// await botClient.disconnect();
+
+// console.log("Stopped");
