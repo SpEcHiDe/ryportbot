@@ -1,6 +1,6 @@
 {
     "imports": {
         "std/": "https://deno.land/std@0.210.0/",
-        "mtkruto/": "https://ghc.deno.dev/MTKruto/MTKruto@5e74609/"
+        "mtkruto/": "https://ghc.deno.dev/MTKruto/MTKruto@3cb416e/"
     }
 }
